@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { ComplaintForm } from '@/components/complaint-form';
 import { Reviews } from '@/components/reviews';
-import type { Complaint } from '@/lib/types';
+import type { Complaint, ShoutOut } from '@/lib/types';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { ShoutOuts } from '@/components/shout-outs';
 
 // Sample initial complaints with names
 const initialComplaints: Complaint[] = [
@@ -35,12 +36,41 @@ const initialComplaints: Complaint[] = [
   },
 ];
 
+const initialShoutOuts: ShoutOut[] = [
+    {
+    id: '1',
+    from: 'Rudraksh',
+    to: 'Neha',
+    message: 'Thanks for helping me with the project, you are a lifesaver!',
+    timestamp: new Date('2024-05-24T10:00:00Z'),
+  },
+  {
+    id: '2',
+    from: 'Neha',
+    to: 'Uvaish',
+    message: 'Great presentation today! You really nailed it.',
+    timestamp: new Date('2024-05-24T11:30:00Z'),
+  },
+  {
+    id: '3',
+    from: 'Uvaish',
+    to: 'Rudraksh',
+    message: 'I appreciate you staying late to help finish the report. Thanks!',
+    timestamp: new Date('2024-05-24T12:00:00Z'),
+  },
+];
+
 
 export default function Home() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
+  const [shoutOuts, setShoutOuts] = useState<ShoutOut[]>(initialShoutOuts);
 
   const handleComplaintSubmitted = (newComplaint: Complaint) => {
     setComplaints((prevComplaints) => [newComplaint, ...prevComplaints]);
+  };
+  
+  const handleShoutOutSubmitted = (newShoutOut: ShoutOut) => {
+    setShoutOuts((prevShoutOuts) => [newShoutOut, ...prevShoutOuts]);
   };
 
   return (
@@ -51,6 +81,9 @@ export default function Home() {
           <div className="mt-20">
              <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
           </div>
+        </section>
+         <section id="shout-outs" className="pt-20 -mt-20">
+          <ShoutOuts shoutOuts={shoutOuts} onShoutOutSubmitted={handleShoutOutSubmitted} />
         </section>
         <section id="reviews" className="pt-20 -mt-20">
           <Reviews complaints={complaints} />
