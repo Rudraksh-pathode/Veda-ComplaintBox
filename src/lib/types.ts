@@ -8,11 +8,3 @@ export interface Complaint {
   summary: string;
   timestamp: Date;
 };
-
-export interface ShoutOut {
-  id: string;
-  from: string;
-  to: string;
-  message: string;
-  timestamp: Date;
-}

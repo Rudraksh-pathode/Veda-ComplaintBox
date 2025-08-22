@@ -22,13 +22,6 @@ export function Header() {
             Home
           </Link>
           <Link
-            href="#shout-outs"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-            prefetch={false}
-          >
-            Shout-outs
-          </Link>
-          <Link
             href="#contact"
             className="text-muted-foreground transition-colors hover:text-foreground"
             prefetch={false}
@@ -59,13 +52,6 @@ export function Header() {
                         prefetch={false}
                     >
                         Home
-                    </Link>
-                     <Link
-                        href="#shout-outs"
-                        className="flex items-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted"
-                        prefetch={false}
-                    >
-                        Shout-outs
                     </Link>
                     <Link
                         href="#contact"

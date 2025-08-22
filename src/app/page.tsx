@@ -1,12 +1,11 @@
-
 'use client';
 
 import { useState, useCallback } from 'react';
 import { ComplaintForm } from '@/components/complaint-form';
-import type { Complaint, ShoutOut } from '@/lib/types';
+import type { Complaint } from '@/lib/types';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { ShoutOuts } from '@/components/shout-outs';
+import { Reviews } from '@/components/reviews';
 
 // Sample initial complaints with names
 const initialComplaints: Complaint[] = [
@@ -36,34 +35,9 @@ const initialComplaints: Complaint[] = [
   },
 ];
 
-const initialShoutOuts: ShoutOut[] = [
-    {
-    id: '1',
-    from: 'Rudraksh',
-    to: 'Neha',
-    message: 'Thanks for helping me with the project, you are a lifesaver!',
-    timestamp: new Date('2024-05-24T10:00:00Z'),
-  },
-  {
-    id: '2',
-    from: 'Neha',
-    to: 'Uvaish',
-    message: 'Great presentation today! You really nailed it.',
-    timestamp: new Date('2024-05-24T11:30:00Z'),
-  },
-  {
-    id: '3',
-    from: 'Uvaish',
-    to: 'Rudraksh',
-    message: 'I appreciate you staying late to help finish the report. Thanks!',
-    timestamp: new Date('2024-05-24T12:00:00Z'),
-  },
-];
-
 
 export default function Home() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
-  const [shoutOuts, setShoutOuts] = useState<ShoutOut[]>(initialShoutOuts);
 
   const handleComplaintSubmitted = useCallback((newComplaint: Complaint) => {
     const complaintWithId = {
@@ -71,10 +45,6 @@ export default function Home() {
       id: crypto.randomUUID(),
     };
     setComplaints((prevComplaints) => [complaintWithId, ...prevComplaints]);
-  }, []);
-  
-  const handleShoutOutSubmitted = useCallback((newShoutOut: ShoutOut) => {
-    setShoutOuts((prevShoutOuts) => [{ ...newShoutOut, id: crypto.randomUUID() }, ...prevShoutOuts]);
   }, []);
 
   return (
@@ -85,9 +55,6 @@ export default function Home() {
           <div className="mt-20">
              <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
           </div>
-        </section>
-         <section id="shout-outs" className="pt-20 -mt-20">
-          <ShoutOuts shoutOuts={shoutOuts} onShoutOutSubmitted={handleShoutOutSubmitted} />
         </section>
       </main>
       <Footer />
