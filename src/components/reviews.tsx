@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import type { Complaint } from '@/lib/types';
 import { CategoryIcon } from '@/components/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 export function Reviews({ complaints }: { complaints: Complaint[] }) {
@@ -40,13 +41,15 @@ export function Reviews({ complaints }: { complaints: Complaint[] }) {
                 <AccordionItem value={c.id} key={c.id} className="border-b-0">
                   <Card className="shadow-md transition-shadow hover:shadow-lg bg-card">
                     <AccordionTrigger className="p-4 text-left hover:no-underline rounded-lg">
-                      <div className="flex items-center gap-4 w-full">
-                        <div className="p-3 bg-primary/10 rounded-full">
-                           <CategoryIcon category={c.category} className="h-6 w-6 text-primary" />
-                        </div>
+                      <div className="flex items-start gap-4 w-full">
+                         <Avatar>
+                          <AvatarImage src={`https://placehold.co/40x40.png`} />
+                          <AvatarFallback>{c.name?.charAt(0) ?? 'A'}</AvatarFallback>
+                        </Avatar>
                         <div className="flex-1 text-left">
-                          <p className="font-medium text-base text-card-foreground">{c.summary}</p>
-                          <div className="flex items-center gap-2 mt-1">
+                          <p className="font-semibold text-base text-card-foreground">{c.name}</p>
+                          <p className="font-medium text-sm text-card-foreground mt-1">{c.summary}</p>
+                          <div className="flex items-center gap-2 mt-2">
                              <Badge variant="secondary">{c.category}</Badge>
                              <p className="text-xs text-muted-foreground">
                                {new Date(c.timestamp).toLocaleDateString()}
@@ -55,8 +58,8 @@ export function Reviews({ complaints }: { complaints: Complaint[] }) {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="px-6 pb-6">
-                      <p className="text-muted-foreground">{c.text}</p>
+                    <AccordionContent className="px-6 pb-6 pt-0">
+                      <p className="text-muted-foreground pl-14">{c.text}</p>
                     </AccordionContent>
                   </Card>
                 </AccordionItem>

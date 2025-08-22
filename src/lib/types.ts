@@ -2,6 +2,7 @@ export type ComplaintCategory = "Service" | "Product" | "Staff" | "Environment" 
 
 export interface Complaint {
   id: string;
+  name?: string; // Name is optional for anonymity
   text: string;
   category: ComplaintCategory;
   summary: string;

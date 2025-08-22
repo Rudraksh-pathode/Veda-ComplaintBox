@@ -24,6 +24,7 @@ export async function submitComplaintAction(prevState: any, formData: FormData) 
     const result = await categorizeComplaint({ complaintText: validatedFields.data.complaintText });
     const newComplaint: Complaint = {
       id: crypto.randomUUID(),
+      name: 'Anonymous', // Submitted complaints are anonymous
       text: validatedFields.data.complaintText,
       // The AI model can sometimes return values outside the defined enum, so we cast and handle it gracefully on the frontend.
       category: result.category as ComplaintCategory,
