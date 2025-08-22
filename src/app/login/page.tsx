@@ -55,13 +55,9 @@ export default function LoginPage() {
         <CardContent>
           <Alert className="mb-4">
             <Info className="h-4 w-4" />
-            <AlertTitle className="font-bold">Demo Credentials & Setup</AlertTitle>
+            <AlertTitle className="font-bold">Important Setup</AlertTitle>
             <AlertDescription className="text-sm">
-              <p className="font-semibold">Use the following credentials for this demo:</p>
-              <div><b>Email:</b> admin123@gmail.com</div>
-              <div><b>Password:</b> 123456</div>
-              <p className="mt-2 font-semibold">Important:</p>
-              <p>You must create this user and enable the Email/Password sign-in provider in your Firebase Console under Authentication &gt; Sign-in method.</p>
+              <p>You must create an admin user and enable the Email/Password sign-in provider in your Firebase Console under Authentication &gt; Sign-in method.</p>
             </AlertDescription>
           </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
