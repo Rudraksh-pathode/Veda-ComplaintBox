@@ -3,8 +3,6 @@
 ## Core Features:
 
 - Anonymous Submission: Anonymously submit a complaint or comment.
-- AI Summarization: Use AI to categorize and summarize complaints.
-- AI Solution Suggestion: AI tool suggests potential solutions based on the type and frequency of complaints.
 - Complaint Search: Search and filter complaints based on keywords or category.
 - Dashboard Visualization: Display a summary of recent complaints or comment in real-time.
 

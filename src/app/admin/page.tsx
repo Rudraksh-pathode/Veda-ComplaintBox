@@ -8,6 +8,9 @@ import { Dashboard } from '@/components/dashboard';
 import type { Complaint } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { summarizeComplaintsAction } from '@/app/actions';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel } from '@/components/ui/alert-dialog';
+import { Sparkles } from 'lucide-react';
 
 
 // Sample initial complaints with names for admin view
@@ -49,6 +52,9 @@ const initialComplaints: Complaint[] = [
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
+  const [isSummaryDialogOpen, setIsSummaryDialogOpen] = useState(false);
+  const [summary, setSummary] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
   const { user, loading, logout } = useAuth();
@@ -60,6 +66,22 @@ export default function AdminPage() {
     }
   }, [user, loading, router]);
 
+  const handleGenerateSummary = async () => {
+    setIsGenerating(true);
+    const result = await summarizeComplaintsAction(complaints);
+    if (result.data) {
+      setSummary(result.data);
+      setIsSummaryDialogOpen(true);
+    } else {
+      toast({
+        title: 'Error',
+        description: result.error,
+        variant: 'destructive',
+      });
+    }
+    setIsGenerating(false);
+  };
+
   if (loading || !user) {
     return (
         <div className="flex h-screen items-center justify-center">
@@ -67,11 +89,6 @@ export default function AdminPage() {
         </div>
     );
   }
-  
-  // In a real app, you would fetch complaints from a database.
-  // We'll use local state for this example.
-  // We are also assuming that if a user is logged in, they are an admin.
-  // In a real app, you would have role-based access control.
   
   return (
     <div className="container mx-auto p-4 md:p-8 space-y-8">
@@ -81,10 +98,27 @@ export default function AdminPage() {
           <p className="text-muted-foreground mt-2 text-lg">Welcome, {user.email}</p>
         </div>
         <div className="flex items-center gap-4">
+          <Button onClick={handleGenerateSummary} disabled={isGenerating}>
+            <Sparkles className="mr-2 h-4 w-4" />
+            {isGenerating ? 'Generating...' : 'Generate AI Summary'}
+          </Button>
           <Button variant="outline" onClick={logout}>Logout</Button>
         </div>
       </header>
       <Dashboard complaints={complaints} />
+      <AlertDialog open={isSummaryDialogOpen} onOpenChange={setIsSummaryDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>AI-Generated Complaint Summary</AlertDialogTitle>
+            <AlertDialogDescription className="text-left whitespace-pre-wrap">
+              {summary}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 'use server';
 
 import { z } from 'zod';
-import type { Complaint, ComplaintCategory } from '@/lib/types';
-import { suggestSolutions } from '@/ai/flows/suggest-solutions';
+import type { Complaint } from '@/lib/types';
+import { summarizeComplaints } from '@/ai/flows/summarize-complaints';
 
 const complaintSchema = z.object({
   complaintText: z.string().min(10, 'Complaint must be at least 10 characters long.'),
@@ -36,24 +36,24 @@ export async function submitComplaintAction(prevState: any, formData: FormData) 
       summary: summary,
       timestamp: new Date(),
     };
-    return { data: newComplaint };
+    return { data: newComplaint, error: null };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to submit complaint. Please try again later.' };
+    return { data: null, error: 'Failed to submit complaint. Please try again later.' };
   }
 }
 
-export async function suggestSolutionsAction(complaints: Complaint[]): Promise<{ data: string | null; error: string | null }> {
+export async function summarizeComplaintsAction(complaints: Complaint[]): Promise<{ data: string | null; error: string | null }> {
   if (complaints.length === 0) {
     return { data: 'There are no complaints to analyze.', error: null };
   }
   
   try {
-    const complaintSummary = complaints.map(c => `- ${c.summary}`).join('\n');
-    const { suggestedSolutions } = await suggestSolutions({ complaintSummary });
-    return { data: suggestedSolutions, error: null };
+    const complaintTexts = complaints.map(c => `[${c.category}] ${c.text}`);
+    const { summary } = await summarizeComplaints({ complaintTexts });
+    return { data: summary, error: null };
   } catch (error) {
-    console.error('Error suggesting solutions:', error);
-    return { data: null, error: 'Failed to generate AI suggestions. Please try again later.' };
+    console.error('Error summarizing complaints:', error);
+    return { data: null, error: 'Failed to generate AI summary. Please try again later.' };
   }
 }
