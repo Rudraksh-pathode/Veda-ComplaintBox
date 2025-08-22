@@ -56,6 +56,9 @@ export default function Home() {
              <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
           </div>
         </section>
+        <section id="reviews">
+            <Reviews complaints={complaints} />
+        </section>
       </main>
       <Footer />
     </div>
