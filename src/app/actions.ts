@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 import type { Complaint, ComplaintCategory } from '@/lib/types';
-import { categorizeComplaint } from '@/ai/flows/categorize-complaint';
 import { suggestSolutions } from '@/ai/flows/suggest-solutions';
 
 const complaintSchema = z.object({
@@ -26,22 +25,21 @@ export async function submitComplaintAction(prevState: any, formData: FormData) 
     const complaintText = validatedFields.data.complaintText;
     const category = validatedFields.data.category;
 
-    // Call the AI to categorize and summarize the complaint.
-    const aiResponse = await categorizeComplaint({ complaintText });
+    // Create a simple summary from the complaint text
+    const summary = complaintText.split(' ').slice(0, 10).join(' ') + '...';
 
     const newComplaint: Complaint = {
       id: crypto.randomUUID(),
       name: 'Anonymous',
       text: complaintText,
-      // Use the AI-determined category, or fallback to user's selection
-      category: aiResponse.category as ComplaintCategory || category,
-      summary: aiResponse.summary,
+      category: category,
+      summary: summary,
       timestamp: new Date(),
     };
     return { data: newComplaint };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to process complaint with AI. Please try again later.' };
+    return { error: 'Failed to submit complaint. Please try again later.' };
   }
 }
 

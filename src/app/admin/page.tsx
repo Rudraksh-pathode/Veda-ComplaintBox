@@ -7,17 +7,6 @@ import { useAuth } from '@/hooks/use-auth';
 import { Dashboard } from '@/components/dashboard';
 import type { Complaint } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from '@/components/ui/dialog';
-import { suggestSolutionsAction } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 
 
@@ -60,8 +49,6 @@ const initialComplaints: Complaint[] = [
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
-  const [suggestions, setSuggestions] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
   const { user, loading, logout } = useAuth();
@@ -72,23 +59,6 @@ export default function AdminPage() {
       router.push('/login');
     }
   }, [user, loading, router]);
-
-  const handleGenerateSuggestions = async () => {
-    setIsGenerating(true);
-    setSuggestions('');
-    const result = await suggestSolutionsAction(complaints);
-    if (result.error) {
-      toast({
-        title: 'Error',
-        description: result.error,
-        variant: 'destructive',
-      });
-    } else {
-      setSuggestions(result.data || 'No suggestions were generated.');
-    }
-    setIsGenerating(false);
-  };
-
 
   if (loading || !user) {
     return (
@@ -111,29 +81,6 @@ export default function AdminPage() {
           <p className="text-muted-foreground mt-2 text-lg">Welcome, {user.email}</p>
         </div>
         <div className="flex items-center gap-4">
-           <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="default" onClick={handleGenerateSuggestions}>Generate Action Plan</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[625px]">
-              <DialogHeader>
-                <DialogTitle>AI-Powered Action Plan</DialogTitle>
-                <DialogDescription>
-                  Based on the submitted complaints, here are some suggested actions.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="prose prose-sm max-w-none h-96 overflow-y-auto">
-                {isGenerating ? <p>Generating suggestions...</p> : <pre className="whitespace-pre-wrap">{suggestions}</pre>}
-              </div>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button type="button" variant="secondary">
-                    Close
-                  </Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
           <Button variant="outline" onClick={logout}>Logout</Button>
         </div>
       </header>
