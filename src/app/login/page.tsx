@@ -14,8 +14,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Info } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('admin@example.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('admin123@gmail.com');
+  const [password, setPassword] = useState('123456');
   const { login, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -58,10 +58,10 @@ export default function LoginPage() {
             <AlertTitle className="font-bold">Demo Credentials & Setup</AlertTitle>
             <AlertDescription className="text-sm">
               <p className="font-semibold">Use the following credentials for this demo:</p>
-              <div><b>Email:</b> admin@example.com</div>
-              <div><b>Password:</b> password</div>
+              <div><b>Email:</b> admin123@gmail.com</div>
+              <div><b>Password:</b> 123456</div>
               <p className="mt-2 font-semibold">Important:</p>
-              <p>You must enable the Email/Password sign-in provider in your Firebase Console under Authentication &gt; Sign-in method.</p>
+              <p>You must create this user and enable the Email/Password sign-in provider in your Firebase Console under Authentication &gt; Sign-in method.</p>
             </AlertDescription>
           </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
