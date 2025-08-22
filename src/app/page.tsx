@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ComplaintForm } from '@/components/complaint-form';
 import { Reviews } from '@/components/reviews';
 import type { Complaint, ShoutOut } from '@/lib/types';
@@ -66,17 +66,17 @@ export default function Home() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
   const [shoutOuts, setShoutOuts] = useState<ShoutOut[]>(initialShoutOuts);
 
-  const handleComplaintSubmitted = (newComplaint: Complaint) => {
+  const handleComplaintSubmitted = useCallback((newComplaint: Complaint) => {
     const complaintWithId = {
       ...newComplaint,
       id: crypto.randomUUID(),
     };
     setComplaints((prevComplaints) => [complaintWithId, ...prevComplaints]);
-  };
+  }, []);
   
-  const handleShoutOutSubmitted = (newShoutOut: ShoutOut) => {
+  const handleShoutOutSubmitted = useCallback((newShoutOut: ShoutOut) => {
     setShoutOuts((prevShoutOuts) => [newShoutOut, ...prevShoutOuts]);
-  };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
