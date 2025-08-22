@@ -51,13 +51,11 @@ export default function LoginPage() {
         <CardContent>
           <Alert className="mb-4">
             <Info className="h-4 w-4" />
-            <AlertTitle>Demo Credentials</AlertTitle>
-            <AlertDescription>
-              Use the following credentials for this demo:
-              <br />
-              <b>Email:</b> admin@example.com
-              <br />
-              <b>Password:</b> password
+            <AlertTitle className="font-bold">Demo Credentials</AlertTitle>
+            <AlertDescription className="text-sm">
+              <p className="font-semibold">Use the following credentials for this demo:</p>
+              <div><b>Email:</b> admin@example.com</div>
+              <div><b>Password:</b> password</div>
             </AlertDescription>
           </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
