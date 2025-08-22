@@ -1,8 +1,6 @@
 'use server';
 
 import { z } from 'zod';
-import { categorizeComplaint } from '@/ai/flows/categorize-complaint';
-import { suggestSolutions } from '@/ai/flows/suggest-solutions';
 import type { Complaint, ComplaintCategory } from '@/lib/types';
 
 const complaintSchema = z.object({
@@ -21,35 +19,23 @@ export async function submitComplaintAction(prevState: any, formData: FormData) 
   }
 
   try {
-    const result = await categorizeComplaint({ complaintText: validatedFields.data.complaintText });
+    // AI features are disabled. Defaulting category to 'Other' and using truncated text as summary.
+    const complaintText = validatedFields.data.complaintText;
     const newComplaint: Complaint = {
       id: crypto.randomUUID(),
-      name: 'Anonymous', // Submitted complaints are anonymous
-      text: validatedFields.data.complaintText,
-      // The AI model can sometimes return values outside the defined enum, so we cast and handle it gracefully on the frontend.
-      category: result.category as ComplaintCategory,
-      summary: result.summary,
+      name: 'Anonymous',
+      text: complaintText,
+      category: 'Other',
+      summary: complaintText.length > 50 ? complaintText.substring(0, 47) + '...' : complaintText,
       timestamp: new Date(),
     };
     return { data: newComplaint };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to categorize complaint with AI. Please try again later.' };
+    return { error: 'Failed to submit complaint. Please try again later.' };
   }
 }
 
 export async function suggestSolutionsAction(complaints: Complaint[]): Promise<{ data: string | null; error: string | null }> {
-  if (complaints.length === 0) {
-    return { data: "No complaints have been submitted yet. There's nothing to analyze.", error: null };
-  }
-
-  const complaintSummary = complaints.map((c) => `- ${c.summary}`).join('\n');
-
-  try {
-    const result = await suggestSolutions({ complaintSummary });
-    return { data: result.suggestedSolutions, error: null };
-  } catch (error) {
-    console.error(error);
-    return { data: null, error: 'Failed to generate solutions. Please try again.' };
-  }
+    return { data: "AI-powered suggestions are currently disabled.", error: null };
 }

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { submitComplaintAction } from '@/app/actions';
@@ -33,7 +32,7 @@ export function ComplaintForm({ onComplaintSubmitted }: ComplaintFormProps) {
     if (state?.data) {
       toast({
         title: 'Success!',
-        description: 'Your complaint has been submitted and categorized.',
+        description: 'Your complaint has been submitted.',
       });
       onComplaintSubmitted(state.data);
       formRef.current?.reset();

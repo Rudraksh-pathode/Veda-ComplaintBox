@@ -7,18 +7,6 @@ import { useAuth } from '@/hooks/use-auth';
 import { Dashboard } from '@/components/dashboard';
 import type { Complaint } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter
-} from "@/components/ui/dialog"
-import { suggestSolutionsAction } from '@/app/actions';
-import { Loader } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 // Sample initial complaints with names for admin view
@@ -60,9 +48,6 @@ const initialComplaints: Complaint[] = [
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>(initialComplaints);
-  const [suggestedSolutions, setSuggestedSolutions] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const { user, loading, logout } = useAuth();
   const router = useRouter();
@@ -72,19 +57,6 @@ export default function AdminPage() {
       router.push('/login');
     }
   }, [user, loading, router]);
-
-  const handleGenerateSolutions = async () => {
-    setIsGenerating(true);
-    setError(null);
-    setSuggestedSolutions('');
-    const result = await suggestSolutionsAction(complaints);
-    if (result.data) {
-      setSuggestedSolutions(result.data);
-    } else {
-      setError(result.error ?? 'An unknown error occurred.');
-    }
-    setIsGenerating(false);
-  };
 
 
   if (loading || !user) {
@@ -108,42 +80,6 @@ export default function AdminPage() {
           <p className="text-muted-foreground mt-2 text-lg">Welcome, {user.email}</p>
         </div>
         <div className="flex items-center gap-4">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button onClick={handleGenerateSolutions}>
-                Generate Action Plan
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-              <DialogHeader>
-                <DialogTitle>Suggested Action Plan</DialogTitle>
-                <DialogDescription>
-                  Based on the submitted complaints, here are some AI-generated suggestions.
-                </DialogDescription>
-              </DialogHeader>
-              <ScrollArea className="max-h-[50vh] pr-6">
-                {isGenerating && (
-                  <div className="flex items-center justify-center p-8">
-                    <Loader className="h-8 w-8 animate-spin text-primary" />
-                    <p className="ml-4 text-muted-foreground">Generating suggestions...</p>
-                  </div>
-                )}
-                {error && (
-                  <div className="text-destructive p-4 bg-destructive/10 rounded-md">{error}</div>
-                )}
-                {suggestedSolutions && (
-                  <div className="prose prose-sm max-w-none whitespace-pre-wrap">
-                    {suggestedSolutions}
-                  </div>
-                )}
-              </ScrollArea>
-              <DialogFooter>
-                <Button variant="outline" asChild>
-                  <DialogTrigger>Close</DialogTrigger>
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
           <Button variant="outline" onClick={logout}>Logout</Button>
         </div>
       </header>
