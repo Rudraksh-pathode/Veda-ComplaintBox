@@ -29,7 +29,7 @@ import type { Complaint, ComplaintCategory } from '@/lib/types';
 import { CategoryIcon } from '@/components/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const categories: ComplaintCategory[] = ["Service", "Product", "Staff", "Environment", "Other"];
+const categories: ComplaintCategory[] = ["Infrastructure", "Harassment", "Academics", "Ragging", "Other"];
 
 export function Dashboard({ complaints }: { complaints: Complaint[] }) {
   const [searchTerm, setSearchTerm] = useState('');

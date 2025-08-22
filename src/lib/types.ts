@@ -1,4 +1,4 @@
-export type ComplaintCategory = "Service" | "Product" | "Staff" | "Environment" | "Other";
+export type ComplaintCategory = "Infrastructure" | "Harassment" | "Academics" | "Ragging" | "Other";
 
 export interface Complaint {
   id: string;

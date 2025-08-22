@@ -22,22 +22,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 export function Reviews({ complaints }: { complaints: Complaint[] }) {
-  const staffComplaints = useMemo(() => {
-    return complaints.filter(c => c.category === 'Staff');
-  }, [complaints]);
-
 
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle className="font-headline text-2xl">Reviews about Staff</CardTitle>
-        <CardDescription>See what others are saying about our staff.</CardDescription>
+        <CardTitle className="font-headline text-2xl">All Reviews</CardTitle>
+        <CardDescription>See what others are saying.</CardDescription>
       </CardHeader>
       <CardContent>
-        {staffComplaints.length > 0 ? (
+        {complaints.length > 0 ? (
           <ScrollArea className="h-[500px] pr-4">
             <Accordion type="single" collapsible className="w-full space-y-2">
-              {staffComplaints.map((c) => (
+              {complaints.map((c) => (
                 <AccordionItem value={c.id} key={c.id} className="border-b-0">
                   <Card className="shadow-md transition-shadow hover:shadow-lg bg-card">
                     <AccordionTrigger className="p-4 text-left hover:no-underline rounded-lg">
@@ -47,7 +43,7 @@ export function Reviews({ complaints }: { complaints: Complaint[] }) {
                           <AvatarFallback>{c.name?.charAt(0) ?? 'A'}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1 text-left">
-                          <p className="font-semibold text-base text-card-foreground">{c.name}</p>
+                          <p className="font-semibold text-base text-card-foreground">{c.name ?? 'Anonymous'}</p>
                           <p className="font-medium text-sm text-card-foreground mt-1">{c.summary}</p>
                           <div className="flex items-center gap-2 mt-2">
                              <Badge variant="secondary">{c.category}</Badge>
@@ -68,7 +64,7 @@ export function Reviews({ complaints }: { complaints: Complaint[] }) {
           </ScrollArea>
         ) : (
           <Card className="flex flex-col items-center justify-center p-12 border-dashed">
-            <p className="text-muted-foreground">No complaints about staff have been submitted yet.</p>
+            <p className="text-muted-foreground">No complaints have been submitted yet.</p>
           </Card>
         )}
       </CardContent>

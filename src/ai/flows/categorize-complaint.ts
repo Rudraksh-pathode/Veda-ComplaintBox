@@ -20,7 +20,7 @@ const CategorizeComplaintOutputSchema = z.object({
   category: z
     .string()
     .describe(
-      'The category of the complaint, chosen from: Service, Product, Staff, Environment, Other.'
+      'The category of the complaint, chosen from: Infrastructure, Harassment, Academics, Ragging, Other.'
     ),
   summary: z.string().describe('A short summary of the complaint.'),
 });
@@ -37,6 +37,8 @@ const prompt = ai.definePrompt({
   prompt: `You are an AI assistant that categorizes user complaints.
 
   Given the following complaint text, determine the most appropriate category and provide a short summary.
+
+  The available categories are: Infrastructure, Harassment, Academics, Ragging, Other.
 
   Complaint Text: {{{complaintText}}}
   `,

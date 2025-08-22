@@ -1,4 +1,4 @@
-import { ConciergeBell, Package, Users, Building2, MoreHorizontal, type Icon as LucideIcon, type LucideProps } from 'lucide-react';
+import { Building2, Users, GraduationCap, AlertTriangle, MoreHorizontal, type Icon as LucideIcon, type LucideProps } from 'lucide-react';
 import type { ComplaintCategory } from '@/lib/types';
 
 interface CategoryIconProps extends LucideProps {
@@ -6,10 +6,10 @@ interface CategoryIconProps extends LucideProps {
 }
 
 const iconMap: Record<ComplaintCategory, LucideIcon> = {
-  Service: ConciergeBell,
-  Product: Package,
-  Staff: Users,
-  Environment: Building2,
+  Infrastructure: Building2,
+  Harassment: Users,
+  Academics: GraduationCap,
+  Ragging: AlertTriangle,
   Other: MoreHorizontal,
 };
 
