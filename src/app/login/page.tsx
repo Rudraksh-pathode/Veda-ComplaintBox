@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, FormEvent } from 'react';
@@ -9,10 +10,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Info } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@example.com');
+  const [password, setPassword] = useState('password');
   const { login, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -46,6 +49,17 @@ export default function LoginPage() {
           <CardDescription>Enter your credentials to access the dashboard.</CardDescription>
         </CardHeader>
         <CardContent>
+          <Alert className="mb-4">
+            <Info className="h-4 w-4" />
+            <AlertTitle>Demo Credentials</AlertTitle>
+            <AlertDescription>
+              Use the following credentials for this demo:
+              <br />
+              <b>Email:</b> admin@example.com
+              <br />
+              <b>Password:</b> password
+            </AlertDescription>
+          </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
