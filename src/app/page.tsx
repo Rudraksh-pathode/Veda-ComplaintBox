@@ -12,7 +12,7 @@ import { ShoutOuts } from '@/components/shout-outs';
 // Sample initial complaints with names
 const initialComplaints: Complaint[] = [
   {
-    id: 'user-1',
+    id: 'user-1-a',
     name: 'Anonymous',
     text: 'The Wi-Fi in the library is very slow and unreliable. It is difficult to study and complete assignments.',
     category: 'Infrastructure',
@@ -20,7 +20,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-20T10:00:00Z'),
   },
   {
-    id: 'user-2',
+    id: 'user-2-b',
     name: 'Anonymous',
     text: 'A professor was consistently late to lectures and ended classes early, which affected my learning.',
     category: 'Academics',
@@ -28,7 +28,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-21T14:30:00Z'),
   },
   {
-    id: 'user-3',
+    id: 'user-3-c',
     name: 'Anonymous',
     text: "I was subjected to verbal harassment by a group of senior students near the hostel.",
     category: 'Harassment',
@@ -67,7 +67,11 @@ export default function Home() {
   const [shoutOuts, setShoutOuts] = useState<ShoutOut[]>(initialShoutOuts);
 
   const handleComplaintSubmitted = (newComplaint: Complaint) => {
-    setComplaints((prevComplaints) => [newComplaint, ...prevComplaints]);
+    const complaintWithId = {
+      ...newComplaint,
+      id: crypto.randomUUID(),
+    };
+    setComplaints((prevComplaints) => [complaintWithId, ...prevComplaints]);
   };
   
   const handleShoutOutSubmitted = (newShoutOut: ShoutOut) => {
