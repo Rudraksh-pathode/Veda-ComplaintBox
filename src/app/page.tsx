@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -11,7 +12,7 @@ import { ShoutOuts } from '@/components/shout-outs';
 // Sample initial complaints with names
 const initialComplaints: Complaint[] = [
   {
-    id: '1',
+    id: 'user-1',
     name: 'Anonymous',
     text: 'The Wi-Fi in the library is very slow and unreliable. It is difficult to study and complete assignments.',
     category: 'Infrastructure',
@@ -19,7 +20,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-20T10:00:00Z'),
   },
   {
-    id: '2',
+    id: 'user-2',
     name: 'Anonymous',
     text: 'A professor was consistently late to lectures and ended classes early, which affected my learning.',
     category: 'Academics',
@@ -27,7 +28,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-21T14:30:00Z'),
   },
   {
-    id: '3',
+    id: 'user-3',
     name: 'Anonymous',
     text: "I was subjected to verbal harassment by a group of senior students near the hostel.",
     category: 'Harassment',

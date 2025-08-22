@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 // Sample initial complaints with names for admin view
 const initialComplaints: Complaint[] = [
   {
-    id: '1',
+    id: 'admin-1',
     name: 'Rudraksh',
     text: 'The Wi-Fi in the library is very slow and unreliable. It is difficult to study and complete assignments.',
     category: 'Infrastructure',
@@ -21,7 +21,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-20T10:00:00Z'),
   },
   {
-    id: '2',
+    id: 'admin-2',
     name: 'Neha',
     text: 'A professor was consistently late to lectures and ended classes early, which affected my learning.',
     category: 'Academics',
@@ -29,7 +29,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-21T14:30:00Z'),
   },
   {
-    id: '3',
+    id: 'admin-3',
     name: 'Uvaish',
     text: "I was subjected to verbal harassment by a group of senior students near the hostel.",
     category: 'Harassment',
@@ -37,7 +37,7 @@ const initialComplaints: Complaint[] = [
     timestamp: new Date('2024-05-22T09:00:00Z'),
   },
     {
-    id: '4',
+    id: 'admin-4',
     name: 'Anonymous',
     text: "The new curriculum for the computer science department is not well-structured and misses key topics.",
     category: 'Academics',
