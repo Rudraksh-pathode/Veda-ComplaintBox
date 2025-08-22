@@ -28,9 +28,13 @@ export default function LoginPage() {
       router.push('/admin');
     } catch (error) {
       console.error(error);
+      let description = 'Failed to log in. Please check your credentials.';
+      if (error instanceof Error && error.message.includes('auth/configuration-not-found')) {
+        description = 'Login failed. Please make sure you have enabled Email/Password sign-in in your Firebase project\'s Authentication settings.';
+      }
       toast({
         title: 'Error',
-        description: 'Failed to log in. Please check your credentials.',
+        description: description,
         variant: 'destructive',
       });
     }
@@ -51,11 +55,13 @@ export default function LoginPage() {
         <CardContent>
           <Alert className="mb-4">
             <Info className="h-4 w-4" />
-            <AlertTitle className="font-bold">Demo Credentials</AlertTitle>
+            <AlertTitle className="font-bold">Demo Credentials & Setup</AlertTitle>
             <AlertDescription className="text-sm">
               <p className="font-semibold">Use the following credentials for this demo:</p>
               <div><b>Email:</b> admin@example.com</div>
               <div><b>Password:</b> password</div>
+              <p className="mt-2 font-semibold">Important:</p>
+              <p>You must enable the Email/Password sign-in provider in your Firebase Console under Authentication &gt; Sign-in method.</p>
             </AlertDescription>
           </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
