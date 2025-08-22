@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useRef, useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -27,7 +27,7 @@ interface ComplaintFormProps {
 }
 
 export function ComplaintForm({ onComplaintSubmitted }: ComplaintFormProps) {
-  const [state, formAction] = useFormState(submitComplaintAction, null);
+  const [state, formAction] = useActionState(submitComplaintAction, null);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
   const [category, setCategory] = useState<ComplaintCategory | ''>('');
