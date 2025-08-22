@@ -34,7 +34,7 @@ export async function submitComplaintAction(prevState: any, formData: FormData) 
     return { data: newComplaint };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to process complaint. Please try again.' };
+    return { error: 'Failed to categorize complaint with AI. Please try again later.' };
   }
 }
 
