@@ -4,7 +4,7 @@
 
 ## Team Details  
 - *Team Name:* VEDA  
-- *Team Members:* Students from Chouksey Engineering College  
+- *Team Members: Neha Dinda,Rudraksh Pathode,Mohammad Uvaish,Khemchand Shau. 
 
 ## Problem Statement  
 Students often lack a secure, anonymous, and emotionally resonant platform to voice concerns about academic, administrative, and social issues. VEDA aims to bridge this gap by empowering students to speak up without fear of retaliation.
