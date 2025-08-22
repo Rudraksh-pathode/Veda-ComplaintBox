@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -20,18 +21,22 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 export function Reviews({ complaints }: { complaints: Complaint[] }) {
+  const staffComplaints = useMemo(() => {
+    return complaints.filter(c => c.category === 'Staff');
+  }, [complaints]);
+
 
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle className="font-headline text-2xl">Reviews</CardTitle>
-        <CardDescription>See what others are saying.</CardDescription>
+        <CardTitle className="font-headline text-2xl">Reviews about Staff</CardTitle>
+        <CardDescription>See what others are saying about our staff.</CardDescription>
       </CardHeader>
       <CardContent>
-        {complaints.length > 0 ? (
+        {staffComplaints.length > 0 ? (
           <ScrollArea className="h-[500px] pr-4">
             <Accordion type="single" collapsible className="w-full space-y-2">
-              {complaints.map((c) => (
+              {staffComplaints.map((c) => (
                 <AccordionItem value={c.id} key={c.id} className="border-b-0">
                   <Card className="shadow-md transition-shadow hover:shadow-lg bg-card">
                     <AccordionTrigger className="p-4 text-left hover:no-underline rounded-lg">
@@ -60,7 +65,7 @@ export function Reviews({ complaints }: { complaints: Complaint[] }) {
           </ScrollArea>
         ) : (
           <Card className="flex flex-col items-center justify-center p-12 border-dashed">
-            <p className="text-muted-foreground">No complaints submitted yet. Be the first!</p>
+            <p className="text-muted-foreground">No complaints about staff have been submitted yet.</p>
           </Card>
         )}
       </CardContent>
