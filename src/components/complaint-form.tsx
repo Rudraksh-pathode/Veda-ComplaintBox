@@ -1,14 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { submitComplaintAction } from '@/app/actions';
-import type { Complaint } from '@/lib/types';
+import type { Complaint, ComplaintCategory } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+const categories: ComplaintCategory[] = ["Infrastructure", "Harassment", "Academics", "Ragging", "Other"];
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -27,6 +30,8 @@ export function ComplaintForm({ onComplaintSubmitted }: ComplaintFormProps) {
   const [state, formAction] = useFormState(submitComplaintAction, null);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const [category, setCategory] = useState<ComplaintCategory | ''>('');
+
 
   useEffect(() => {
     if (state?.data) {
@@ -36,6 +41,7 @@ export function ComplaintForm({ onComplaintSubmitted }: ComplaintFormProps) {
       });
       onComplaintSubmitted(state.data);
       formRef.current?.reset();
+      setCategory('');
     } else if (state?.error) {
       toast({
         title: 'Error',
@@ -53,6 +59,22 @@ export function ComplaintForm({ onComplaintSubmitted }: ComplaintFormProps) {
       </CardHeader>
       <CardContent>
         <form ref={formRef} action={formAction} className="space-y-4">
+           <div className="space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <Select name="category" required value={category} onValueChange={(value) => setCategory(value as ComplaintCategory)}>
+              <SelectTrigger className="w-full bg-white">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+             {state?.errors?.category && (
+              <p className="text-sm text-destructive">{state.errors.category[0]}</p>
+            )}
+          </div>
           <div className="space-y-2">
             <Label htmlFor="complaintText">Your Complaint or Comment</Label>
             <Textarea
