@@ -23,32 +23,17 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
-import { Search, Lightbulb, Bot } from 'lucide-react';
+import { Search } from 'lucide-react';
 import type { Complaint, ComplaintCategory } from '@/lib/types';
 import { CategoryIcon } from '@/components/icons';
-import { suggestSolutionsAction } from '@/app/actions';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Skeleton } from './ui/skeleton';
 
 const categories: ComplaintCategory[] = ["Service", "Product", "Staff", "Environment", "Other"];
 
 export function Dashboard({ complaints }: { complaints: Complaint[] }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ComplaintCategory | 'all'>('all');
-  const [solutions, setSolutions] = useState<string | null>(null);
-  const [isLoadingSolutions, setIsLoadingSolutions] = useState(false);
-  const [solutionError, setSolutionError] = useState<string | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const filteredComplaints = useMemo(() => {
     return complaints
@@ -69,16 +54,6 @@ export function Dashboard({ complaints }: { complaints: Complaint[] }) {
 
     return categories.map(name => ({ name, count: counts[name] || 0 }));
   }, [complaints]);
-
-  const handleSuggestSolutions = async () => {
-    setIsLoadingSolutions(true);
-    setSolutionError(null);
-    setSolutions(null);
-    const { data, error } = await suggestSolutionsAction(complaints);
-    setSolutions(data);
-    setSolutionError(error);
-    setIsLoadingSolutions(false);
-  };
 
   return (
     <div className="space-y-8">
@@ -112,36 +87,6 @@ export function Dashboard({ complaints }: { complaints: Complaint[] }) {
                 ))}
               </SelectContent>
             </Select>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={handleSuggestSolutions} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                  <Lightbulb className="mr-2 h-4 w-4" />
-                  Suggest Solutions
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <DialogHeader>
-                  <DialogTitle className="flex items-center">
-                    <Bot className="mr-2" /> AI-Powered Solutions
-                  </DialogTitle>
-                  <DialogDescription>
-                    Based on all submitted complaints, here are some suggested actions.
-                  </DialogDescription>
-                </DialogHeader>
-                <ScrollArea className="h-72 pr-4">
-                  {isLoadingSolutions && (
-                    <div className="space-y-4 mt-4">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-[90%]" />
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-[80%]" />
-                    </div>
-                  )}
-                  {solutionError && <p className="text-destructive">{solutionError}</p>}
-                  {solutions && <div className="text-sm whitespace-pre-wrap font-body" dangerouslySetInnerHTML={{ __html: solutions.replace(/\n/g, '<br />') }} />}
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
           </div>
           <div className="md:col-span-2">
             <ResponsiveContainer width="100%" height={250}>
