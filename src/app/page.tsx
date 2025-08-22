@@ -12,7 +12,7 @@ import { ShoutOuts } from '@/components/shout-outs';
 const initialComplaints: Complaint[] = [
   {
     id: '1',
-    name: 'Rudraksh',
+    name: 'Anonymous',
     text: 'The Wi-Fi in the library is very slow and unreliable. It is difficult to study and complete assignments.',
     category: 'Infrastructure',
     summary: 'Poor Wi-Fi in library',
@@ -20,7 +20,7 @@ const initialComplaints: Complaint[] = [
   },
   {
     id: '2',
-    name: 'Neha',
+    name: 'Anonymous',
     text: 'A professor was consistently late to lectures and ended classes early, which affected my learning.',
     category: 'Academics',
     summary: 'Professor punctuality issues',
@@ -28,7 +28,7 @@ const initialComplaints: Complaint[] = [
   },
   {
     id: '3',
-    name: 'Uvaish',
+    name: 'Anonymous',
     text: "I was subjected to verbal harassment by a group of senior students near the hostel.",
     category: 'Harassment',
     summary: 'Verbal harassment by seniors',
