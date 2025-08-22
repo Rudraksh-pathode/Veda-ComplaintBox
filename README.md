@@ -38,7 +38,7 @@ The platform is built to be visually engaging, emotionally aware, and impact-dri
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQtT4O79CiqqXex4EhkA3LYNka0FbQbgQs_ceYrYmxvsLOIytlmJgMIFh2_uQa-9Q/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ## UI/UX / Design Link  
-[Google Slides – VEDA Design & Flow](https://docs.google.com/presentation/d/1B5hxzBMkyW7xeaNq5mIalqG9b0XBqHnQ/edit?slide=id.p1#slide=id.p1)
+check the images in uiux Folder
 
 ## Future Enhancements  
 - Add login system for verified submissions  
