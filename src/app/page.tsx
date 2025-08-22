@@ -3,7 +3,6 @@
 
 import { useState, useCallback } from 'react';
 import { ComplaintForm } from '@/components/complaint-form';
-import { Reviews } from '@/components/reviews';
 import type { Complaint, ShoutOut } from '@/lib/types';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
@@ -75,7 +74,7 @@ export default function Home() {
   }, []);
   
   const handleShoutOutSubmitted = useCallback((newShoutOut: ShoutOut) => {
-    setShoutOuts((prevShoutOuts) => [newShoutOut, ...prevShoutOuts]);
+    setShoutOuts((prevShoutOuts) => [{ ...newShoutOut, id: crypto.randomUUID() }, ...prevShoutOuts]);
   }, []);
 
   return (
@@ -89,9 +88,6 @@ export default function Home() {
         </section>
          <section id="shout-outs" className="pt-20 -mt-20">
           <ShoutOuts shoutOuts={shoutOuts} onShoutOutSubmitted={handleShoutOutSubmitted} />
-        </section>
-        <section id="reviews" className="pt-20 -mt-20">
-          <Reviews complaints={complaints} />
         </section>
       </main>
       <Footer />
