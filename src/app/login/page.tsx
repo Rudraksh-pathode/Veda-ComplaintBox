@@ -10,8 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Info } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -53,13 +51,6 @@ export default function LoginPage() {
           <CardDescription>Enter your credentials to access the dashboard.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Alert className="mb-4">
-            <Info className="h-4 w-4" />
-            <AlertTitle className="font-bold">Important Setup</AlertTitle>
-            <AlertDescription className="text-sm">
-              <p>You must create an admin user and enable the Email/Password sign-in provider in your Firebase Console under Authentication > Sign-in method.</p>
-            </AlertDescription>
-          </Alert>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
